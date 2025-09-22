@@ -1,0 +1,137 @@
+## 🚀 **Recommended Run Order:**
+
+### **Phase 1: Basic Testing (Do This First!)**
+
+```bash
+# 1. Test MediaPipe
+python -c "import mediapipe as mp; print('MediaPipe OK!')"
+
+# 2. Test on your image
+python quick_test.py
+
+# 3. Test individual modules
+python test_pipeline.py
+```
+
+
+### **Phase 2: Full Dataset (If Phase 1 Works)**
+
+```bash
+# Only run this if you have the full JHMDB dataset downloaded
+python src/main_pipeline.py
+```
+
+
+## ⚡ **Quick Start Without Full Dataset**
+
+If you don't have the full JHMDB dataset yet, create this simple test:
+
+```python
+# Create: simple_test.py
+import numpy as np
+from src.keypoint_extractor import MediaPipeExtractor
+from src.hierarchical_segmentation import HierarchicalBodySegmentation
+from src.geometric_features import GeometricFeatureExtractor
+from src.feature_vector_encoder import HierarchicalFeatureEncoder
+
+def simple_test():
+    print("🧪 Testing Hierarchical Pose Pipeline...")
+    
+    # Test with your image
+    extractor = MediaPipeExtractor()
+    keypoints = extractor.extract_keypoints("image.jpg")
+    
+    if keypoints is None:
+        print("❌ No pose detected in image")
+        return
+    
+    print(f"✅ Step 1: Extracted {len(keypoints)} keypoints")
+    
+    # Test hierarchical segmentation
+    segmentation = HierarchicalBodySegmentation()
+    body_parts = segmentation.segment_body_parts(keypoints)
+    print(f"✅ Step 2: Segmented into {len(body_parts)} body parts")
+    
+    # Test geometric features
+    feature_extractor = GeometricFeatureExtractor(segmentation)
+    angles = feature_extractor.extract_joint_angles(keypoints)
+    proportions = feature_extractor.extract_limb_proportions(keypoints)
+    
+    print(f"✅ Step 3: Extracted {len(angles)} joint angles")
+    print(f"✅ Step 4: Extracted {len(proportions)} body proportions")
+    
+    # Test feature encoding
+    encoder = HierarchicalFeatureEncoder()
+    features = encoder.create_hierarchical_features(keypoints)
+    
+    print(f"✅ Step 5: Created feature vector of length {len(features)}")
+    print(f"✅ Feature names: {encoder.feature_names[:5]}...")
+    
+    print("\n🎉 All components working! Ready for full pipeline.")
+
+if __name__ == "__main__":
+    simple_test()
+```
+
+
+## 🎯 **My Recommendation:**
+
+**Start with this sequence:**
+
+```bash
+# 1. Install dependencies
+pip install -r requirements.txt
+
+# 2. Test MediaPipe
+python -c "import mediapipe as mp; print('✅ MediaPipe installed!')"
+
+# 3. Create and run simple_test.py (code above)
+python simple_test.py
+
+# 4. If that works, try the full pipeline
+python src/main_pipeline.py
+```
+
+
+## 🚨 **Common Issues \& Fixes:**
+
+1. **MediaPipe Installation Issues:**
+
+```bash
+pip install --upgrade mediapipe opencv-python
+```
+
+2. **Dataset Not Found:**
+    - Start with single image testing first
+    - Download Sub-JHMDB only (smaller dataset)
+3. **Import Errors:**
+
+```bash
+# Make sure you're in the project root directory
+export PYTHONPATH="${PYTHONPATH}:$(pwd)"
+```
+
+
+## ✅ **Ready to Run?**
+
+**If you have:**
+
+- ✅ Installed requirements.txt
+- ✅ Your image.jpg in the root folder
+- ✅ All source files in src/
+
+**Then YES! Start with:**
+
+```bash
+python simple_test.py
+```
+
+This will test your entire pipeline with your uploaded image without needing the full dataset first.
+
+Let me know what happens when you run the simple test!
+<span style="display:none">[^1]</span>
+
+<div style="text-align: center">⁂</div>
+
+[^1]: image.jpg
+

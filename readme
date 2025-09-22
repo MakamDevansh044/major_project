@@ -1,0 +1,75 @@
+# Hybrid Geometric-Machine Learning for Interpretable Pose Classification
+
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![MediaPipe](https://img.shields.io/badge/MediaPipe-0.10.7-green.svg)](https://mediapipe.dev/)
+
+## 🎯 Project Vision
+
+This project addresses a critical gap in human pose classification by developing a **hybrid approach that combines geometric understanding with machine learning** to create pose classifiers that are not only accurate but also **inherently interpretable and explainable**.
+
+### 💡 The Core Idea
+
+Most state-of-the-art pose classification systems rely on deep learning architectures that process skeletal data as flat, unstructured inputs, resulting in black-box predictions with limited interpretability. Our approach takes a fundamentally different path:
+
+**🏗️ Hierarchical Structure**: Instead of treating human keypoints as independent coordinates, we organize them into a **hierarchical anatomical structure** - segmenting the body into meaningful regions like head, torso, left/right arms, and left/right legs, mirroring the natural structure of human anatomy.
+
+**📐 Geometric Intelligence**: For each body segment, we compute **interpretable geometric features** including:
+- Joint angles (elbow flexion, knee bend, shoulder rotation)
+- Relative positions and vectors between connected joints
+- Spatial relationships and proportions between different body parts
+- Inter-segment distances and orientations
+
+**🧠 Structured Learning**: These geometric features are encoded as **structured vectors** that preserve the hierarchical relationships, enabling machine learning models to learn from anatomically meaningful representations rather than raw coordinate data.
+
+**🔍 Transparent Decision-Making**: The resulting classification system can explain its decisions by tracing them back to specific joint angles, body part configurations, or geometric relationships - making it possible to understand *why* a particular pose was classified in a certain way.
+
+### 🎯 Why This Matters
+
+**Healthcare Applications**: In medical rehabilitation or movement analysis, clinicians need to understand why a system classified a movement as abnormal. Our approach can pinpoint specific joint angles or body relationships that contributed to the decision.
+
+**Sports Analytics**: Coaches can understand which specific body mechanics led to a pose classification, enabling targeted training and improvement.
+
+**Human-Computer Interaction**: Gesture recognition systems can provide feedback about which part of a pose needs adjustment.
+
+**Robustness**: By leveraging anatomical structure and geometric relationships, the system is more robust to variations, occlusions, and edge cases compared to end-to-end deep learning approaches.
+
+---
+
+## 🚀 Quick Start
+
+### Installation
+
+# 1. Install dependencies
+pip install -r requirements.txt
+
+# 2. Download Sub-JHMDB dataset to datasets/jhmdb_dataset/
+
+# 3. Run the pipeline
+python src/main_pipeline.py
+
+# 4. Test on single image
+python test_pipeline.py
+
+
+
+## 📋 Project Structure
+
+hierarchical-pose-classification/
+│
+├── src/
+│ ├── keypoint_extractor.py # MediaPipe integration
+│ ├── hierarchical_segmentation.py # Body part organization
+│ ├── geometric_features.py # Joint angles & spatial features
+│ ├── feature_vector_encoder.py # Structured feature creation
+│ ├── pose_classifier.py # ML classification pipeline
+│ └── main_pipeline.py # Complete pipeline execution
+│
+├── datasets/ # Dataset storage
+├── models/ # Trained model storage
+├── notebooks/ # Jupyter notebooks for analysis
+├── tests/ # Unit tests
+│
+├── requirements.txt # Python dependencies
+├── README.md # This file
+└── setup.py # Package installation
